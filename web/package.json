@@ -24,7 +24,8 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"clean": "rm -rf node_modules",
+		"clean": "rm -rf node_modules && rm -rf build",
+		"build:clean": "npm run clean",
 		"format": "prettier --write \"**/*.{js,jsx,json,css,,html,md}\"",
 		"test:coverage": "npm run test -- --coverage"
 	},

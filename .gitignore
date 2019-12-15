@@ -12,3 +12,5 @@
 /**/amplifyconfiguration.json
 /**/amplify-gradle-config.json
 /**/amplifyxc.config
+/**/yarn.lock
+/**/package-lock.json
