@@ -1,0 +1,15 @@
+{
+  "name": "social-media-network-core",
+  "version": "1.0.0",
+  "description": "backend services for Social Media Network frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "CM",
+  "license": "ISC",
+  "dependencies": {
+    "google-auth-library": "^5.7.0",
+    "googleapis": "^46.0.0"
+  }
+}
