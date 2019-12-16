@@ -1,15 +1,24 @@
 {
-  "name": "social-media-networking",
-  "version": "1.0.0",
-  "description": "workspace ",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "workspace": [
+	"name": "social-media-networking",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"workspaces": {
+		"packages": [
     "web",
-    "backend"
-  ],
-  "author": "CM",
-  "license": "ISC"
+		"backend"],
+		"nohoist": [
+    "**/react-native",
+		"**/react-native/**",
+		"**/react-scripts",
+		"**/react-scripts/**",
+		"**/expo",
+		"**/expo/**"]
+	},
+	"devDependencies": {
+	},
+	"author": "CM",
+	"license": "ISC"
 }
