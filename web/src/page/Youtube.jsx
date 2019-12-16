@@ -16,7 +16,6 @@ const useStyles = theme => ({
   card: {
     width: 380,
     height: 240,
-    alignItems: "center",
     spacing: 1,
   },
   media: {
@@ -25,20 +24,26 @@ const useStyles = theme => ({
   },
 });
 
+
+
 class Youtube extends React.Component {
   constructor(props) {
     super(props);
     this.state = { videos: null };
   }
-
-  componentDidMount() {
-    axios
+  
+  async getVideos() {
+    await axios
       .get(
         "/data.json"
       )
       .then(({ data }) => {
         this.setState({ videos: data.rows });
       });
+  }
+  
+  componentDidMount() {
+    this.getVideos();
   }
 
   render() {
@@ -51,8 +56,7 @@ class Youtube extends React.Component {
         <Box
           display="flex"
           flexWrap="wrap"
-          alignContent="flex-start"
-          alignItems="flex-start">
+          alignContent="space-around">
           {this.state.videos ? (this.state.videos.map((video, index) => (
             <Box m={1}>
             <Card className={classes.card}>
