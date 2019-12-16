@@ -27,10 +27,11 @@ const useStyles = makeStyles(theme => ({
       paddingLeft: drawerWidth + 2,
       //paddingTop: 60,
       with: `calc(100% - ${drawerWidth}px)`
-    }
+    },
   },
   paper: {
-    padding: 10
+    padding: 10,
+    minHeight: "91vh"
   }
 }));
 
