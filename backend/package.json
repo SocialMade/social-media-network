@@ -1,17 +1,25 @@
 {
   "name": "social-media-network-core",
   "version": "1.0.0",
-  "description": "backend services for Social Media Network frontend",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "node index.js",
-    "clean": "rm -rf node_modules && rm -rf core",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js --exec babel-node --presets env",
+    "release": "npm run clean && npm run build && npm run serve",
+    "clean": "rm -rf backend && mkdir backend",
+    "build": "babel . -s -D -d backend --presets env --ignore node_modules",
+    "serve": "nodemon core/server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2"
   },
   "author": "CM",
   "license": "ISC",
-  "dependencies": {
-    "google-auth-library": "^5.7.0",
-    "googleapis": "^46.0.0"
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
   }
 }
