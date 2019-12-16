@@ -10,11 +10,11 @@ yarn
 ```
 ### 3. work with package from root
 ```shell
-yarn workspaces backend <yarn command>
+yarn workspace backend <yarn command>
 ```
 Example:
 ```shell
-yarn workspaces run test
+yarn workspace run test
 ```
 
 ## Discusion Issues and solution: 

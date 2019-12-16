@@ -3,21 +3,30 @@
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
+		"start": "concurrently \"yarn start:core\" \"yarn start:web\"",
+		"start:core": "yarn workspace social-media-network-core start",
+		"start:web": "yarn workspace social-media-network-web start",
+		"install:core": "cd backend && npm install",
+		"install:all": "yarn install && yarn install:core",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"workspaces": {
 		"packages": [
-    "web",
-		"backend"],
+			"web",
+			"backend"
+		],
 		"nohoist": [
-    "**/react-native",
-		"**/react-native/**",
-		"**/react-scripts",
-		"**/react-scripts/**",
-		"**/expo",
-		"**/expo/**"]
+			"**/react-native",
+			"**/react-native/**",
+			"**/react-scripts",
+			"**/react-scripts/**",
+			"**/expo",
+			"**/expo/**"
+		]
 	},
 	"devDependencies": {
+		"concurrently": "^5.0.1",
+		"wsrun": "^5.2.0"
 	},
 	"author": "CM",
 	"license": "ISC"
