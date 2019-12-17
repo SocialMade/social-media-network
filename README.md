@@ -1,5 +1,6 @@
 # Social Media Network
 The root project building use yarn workspace feature. Reading how to work with yarn workspace https://yarnpkg.com/en/docs/cli/workspaces
+Website here: https://socialmade.netlify.com/
 
 ### 1. install yarn global
 ```shell
