@@ -17,14 +17,17 @@ import { useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
 import Collapse from '@material-ui/core/Collapse';
+import Badge from '@material-ui/core/Badge';
 import MenuOutlinedIcon from '@material-ui/icons/MenuOutlined';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import { uiSetting } from '../config/theme.config';
 import { MenuConfigs } from '../config/menu.config';
 import { cssStyled } from "../config/appbar.style";
+import ProfileMenu from "../fragment/ProfileMenu"
 
 const keySrollToTop = String(uiSetting.keyScrollToTop);
 
@@ -117,14 +120,16 @@ const DrawerMenu = () => {
                     <div style={{ flexGrow: 1 }} />
                     <IconButton
                         edge="end"
-                        aria-label="account of current user"
-                        aria-controls="primary-account-menu"
-                        aria-haspopup="true"
-                        onClick={handleProfile}
-                        color="inherit"
-                    >
-                        <AccountBoxIcon className={classes.accountButton} />
+                        aria-label="token of current user"
+                        aria-controls="primary-token"
+                        aria-haspopup="false"
+                        color="inherit">
+                        <Badge badgeContent={100.000} color="secondary">
+                            <MonetizationOn className={classes.moneyButton} />
+                        </Badge>
                     </IconButton>
+                    <div style={{ width: 20 }} />
+                    <ProfileMenu />
                 </Toolbar>
             </AppBar>
             <Toolbar display="none" id={keySrollToTop} />

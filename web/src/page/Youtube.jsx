@@ -10,6 +10,7 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import GridListTile from "@material-ui/core/GridListTile";
+import {getUrlParamValue} from '../util/stringUtil';
 import axios from "axios";
 
 const useStyles = theme => ({
@@ -24,8 +25,6 @@ const useStyles = theme => ({
   },
 });
 
-
-
 class Youtube extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +34,7 @@ class Youtube extends React.Component {
   async getVideos() {
     await axios
       .get(
-        "/data.json"
+        "http://sharemoney-env.jkkfubp3xq.us-east-2.elasticbeanstalk.com/contents"
       )
       .then(({ data }) => {
         this.setState({ videos: data.rows });
@@ -47,10 +46,7 @@ class Youtube extends React.Component {
   }
 
   render() {
-    //"http://sharemoney-env.jkkfubp3xq.us-east-2.elasticbeanstalk.com/contents"
-    //http://www.youtube.com/embed/9SZA5yVJbhI
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
         <Box
@@ -62,7 +58,7 @@ class Youtube extends React.Component {
             <Card className={classes.card}>
               <CardActionArea>
                 <CardMedia className={classes.media} component="iframe" height="140"
-                  src={video.url} />
+                  src={`http://www.youtube.com/embed/${getUrlParamValue(video.url,"v")}`} />
               </CardActionArea>
             </Card>
             </Box>

@@ -45,7 +45,7 @@ export const cssStyled = makeStyles(theme => ({
     marginRight: 'auto',
     marginLeft: 4
   },
-  accountButton: {
+  moneyButton: {
     fontSize: '2rem',
     color: common.white
   },
