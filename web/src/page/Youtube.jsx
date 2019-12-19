@@ -59,7 +59,7 @@ class Youtube extends React.Component {
             <Card className={classes.card}>
               <CardActionArea>
                 <CardMedia className={classes.media} component="iframe" height="140"
-                  /* src={`http://www.youtube.com/embed/${getUrlParamValue(video.url,"v")}`}  */
+                  /* src={`http://www.youtube.com/embed/${getUrlParamValue(video.url,"v")}`} */
                   src={video.url} />
               </CardActionArea>
             </Card>
