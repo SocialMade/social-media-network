@@ -34,7 +34,8 @@ class Youtube extends React.Component {
   async getVideos() {
     await axios
       .get(
-        "http://sharemoney-env.jkkfubp3xq.us-east-2.elasticbeanstalk.com/contents"
+        /* "http://sharemoney-env.jkkfubp3xq.us-east-2.elasticbeanstalk.com/contents" */
+        "/data.json"
       )
       .then(({ data }) => {
         this.setState({ videos: data.rows });
@@ -58,7 +59,8 @@ class Youtube extends React.Component {
             <Card className={classes.card}>
               <CardActionArea>
                 <CardMedia className={classes.media} component="iframe" height="140"
-                  src={`http://www.youtube.com/embed/${getUrlParamValue(video.url,"v")}`} />
+                  /* src={`http://www.youtube.com/embed/${getUrlParamValue(video.url,"v")}`} */
+                  src={video.url} />
               </CardActionArea>
             </Card>
             </Box>
