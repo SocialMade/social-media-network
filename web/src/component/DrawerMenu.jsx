@@ -129,7 +129,7 @@ const DrawerMenu = () => {
                         </Badge>
                     </IconButton>
                     <div style={{ width: 20 }} />
-                    <ProfileMenu />
+                    <ProfileMenu isAuthen={false} />
                 </Toolbar>
             </AppBar>
             <Toolbar display="none" id={keySrollToTop} />

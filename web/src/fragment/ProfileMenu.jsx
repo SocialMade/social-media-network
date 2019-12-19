@@ -17,7 +17,7 @@ const styles = theme => ({
     display: 'flex',
   },
   paper: {
-    marginRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing(2)
   },
 });
 
@@ -29,7 +29,7 @@ class ProfileMenu extends Component {
     // This binding is necessary to make `this` work in the callback
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    
+
   }
 
   static propTypes = {
@@ -64,45 +64,47 @@ class ProfileMenu extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, oAuthen } = this.props;
     const { open } = this.state;
     return (
       <React.Fragment>
-        <IconButton
-          edge="end"
-          aria-label="account of current user"
-          aria-controls="primary-account-menu"
-          buttonRef={node => {
-            this.anchorEl = node;
-          }}
-          aria-owns={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleToggle}>
-          <AccountBoxIcon style={{ color: "#fff", fontSize: '2rem' }} />
-        </IconButton>
-        <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              id="menu-list-grow"
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>
-                    {this.state.isAuthen ?
-                      (<><MenuItem onClick={this.handleOpenSettings}>User Settings</MenuItem>
-                        <MenuItem onClick={this.handleLogout}>Sign Out</MenuItem></>)
-                      : (<><MenuItem onClick={this.handleLogin}>Sign In</MenuItem>)
-                      <MenuItem onClick={this.handleRegister}>Register</MenuItem></>)}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-        <LoginForm ref="loginRef" />
-        <RegisterForm ref="registerRef" />
+        <div>
+          <IconButton
+            edge="end"
+            aria-label="account of current user"
+            aria-controls="primary-account-menu"
+            buttonRef={node => {
+              this.anchorEl = node;
+            }}
+            aria-owns={open ? 'menu-list-grow' : undefined}
+            aria-haspopup="true"
+            onClick={this.handleToggle}>
+            <AccountBoxIcon style={{ color: "#fff", fontSize: '2rem' }} />
+          </IconButton>
+          <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                id="menu-list-grow"
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={this.handleClose}>
+                    <MenuList>
+                      {this.state.isAuthen ?
+                        (<><MenuItem onClick={this.handleOpenSettings}>User Settings</MenuItem>
+                          <MenuItem onClick={this.handleLogout}>Sign Out</MenuItem></>)
+                        : (<><MenuItem onClick={this.handleLogin}>Sign In</MenuItem>
+                          <MenuItem onClick={this.handleRegister}>Register</MenuItem></>)}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+          <LoginForm ref="loginRef" />
+          <RegisterForm ref="registerRef" />
+        </div>
       </React.Fragment>
     )
   }
@@ -110,7 +112,7 @@ class ProfileMenu extends Component {
 
 ProfileMenu.propTypes = {
   classes: PropTypes.object.isRequired,
-  isAuthen: false
+  oAuthen: PropTypes.object,
 };
 
 export default withStyles(styles)(ProfileMenu);

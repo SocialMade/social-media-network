@@ -1,27 +1,22 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import { flexbox } from '@material-ui/system';
 import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import GridListTile from "@material-ui/core/GridListTile";
-import {getUrlParamValue} from '../util/stringUtil';
+import { getUrlParamValue } from "../util/stringUtil";
 import axios from "axios";
+import YouTube from 'react-youtube';
 
-const useStyles = theme => ({
+const useStyles = () => ({
   card: {
-    width: 380,
-    height: 240,
+    width: 384,
+    height: 216,
     spacing: 1,
   },
   media: {
-    width: 380,
-    height: 240,
+    width: 384,
+    height: 216,
   },
 });
 
@@ -30,7 +25,7 @@ class Youtube extends React.Component {
     super(props);
     this.state = { videos: null };
   }
-  
+
   async getVideos() {
     await axios
       .get(
@@ -41,28 +36,48 @@ class Youtube extends React.Component {
         this.setState({ videos: data.rows });
       });
   }
-  
+
   componentDidMount() {
     this.getVideos();
   }
 
+  _onReady(event) {
+    // access to player in all event handlers via event.target
+    //event.target.pauseVideo();
+  }
+
   render() {
     const { classes } = this.props;
+    // https://developers.google.com/youtube/player_parameters
+    const opts = {
+      height: 216,
+      width: 384,
+      playerVars: {
+        autoplay: 1
+      }
+    };
+
     return (
       <div className={classes.root}>
         <Box
           display="flex"
           flexWrap="wrap"
           alignContent="space-around">
-          {this.state.videos ? (this.state.videos.map((video, index) => (
+          {this.state.videos ? (this.state.videos.map((video) => (
             <Box m={1}>
-            <Card className={classes.card}>
-              <CardActionArea>
-                <CardMedia className={classes.media} component="iframe" height="140"
-                  /* src={`http://www.youtube.com/embed/${getUrlParamValue(video.url,"v")}`} */
-                  src={video.url} />
-              </CardActionArea>
-            </Card>
+              <Card className={classes.card}>
+                <CardActionArea>
+                  <CardMedia className={classes.media} component="div"
+                  /* src={`http://www.youtube.com/embed/${getUrlParamValue(video.url,"v")}`} */>
+                    {/* <YoutubePlayer oIframe={{ iframeId: video.id, videoId: "9SZA5yVJbhI" }} /> */}
+                    <YouTube
+                      videoId={getUrlParamValue(video.url,"v")}
+                      opts={opts}
+                      onReady={this._onReady}
+                    />
+                  </CardMedia>
+                </CardActionArea>
+              </Card>
             </Box>
           ))) : (<></>)}
         </Box>
