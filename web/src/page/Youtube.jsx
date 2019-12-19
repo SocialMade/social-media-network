@@ -32,14 +32,12 @@ class Youtube extends React.Component {
   }
   
   async getVideos() {
-    await axios
+    const videos = (await axios
       .get(
         /* "http://sharemoney-env.jkkfubp3xq.us-east-2.elasticbeanstalk.com/contents" */
         "/data.json"
-      )
-      .then(({ data }) => {
-        this.setState({ videos: data.rows });
-      });
+      )).rows;
+    this.setState({ videos: videos });
   }
   
   componentDidMount() {
