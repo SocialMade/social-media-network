@@ -12,8 +12,8 @@ const styles = theme => ({
     height: 297,
     border: 0
   },
-  playerStyles: {
-    
+  player: {
+
   }
 });
 
@@ -33,7 +33,7 @@ class YTPlayer extends Component {
   static propTypes = {
     prop: PropTypes
   }
-  
+
   componentDidMount = () => {
     // On mount, check to see if the API script is already loaded
     if (!window.YT) { // If not, load the script asynchronously
@@ -46,7 +46,7 @@ class YTPlayer extends Component {
       const firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    } else { 
+    } else {
       // If script is already there, load the video directly
       this.initYoutubePlayer();
     }
@@ -54,16 +54,16 @@ class YTPlayer extends Component {
 
   initYoutubePlayer = () => {
     this.player = new window.YT.Player(this.props.oIframe.iframeId, {
-      /* height: this.props.classes.iframe.height,
+      height: this.props.classes.iframe.height,
       width: this.props.classes.iframe.width,
-      videoId: this.props.oIframe.videoId, */
+      videoId: this.props.oIframe.videoId,
       events: {
         'onReady': this.onPlayerReady,
         'onStateChange': this.onPlayerStateChange
       }
     });
   }
-  
+
   componentDidUpdate(prevProps) {
     if (prevProps.children !== this.props.children) {
       //updated component changed
@@ -73,7 +73,7 @@ class YTPlayer extends Component {
   componentWillUnmount() {
     //component destroy
   }
-  
+
   onPlayerStateChange = () => {
     console.log("onPlayerStateChange");
   }
@@ -83,17 +83,20 @@ class YTPlayer extends Component {
   }
 
   render() {
-    const { classes, oIframe}  = this.props;
+    const { classes, oIframe } = this.props;
 
     return (
       <React.Fragment>
-        <iframe
+        {/* <iframe
         type="text/html"
         id={oIframe.iframeId}
         style={{height: "inherit", width: "inherit"}}
         src={`https://www.youtube.com/embed/${oIframe.videoId}?enablejsapi=1&origin=${window.origin}`}
         frameBorder={classes.iframe.border}
-        allow="autoplay; fullscreen"></iframe>
+        allow="autoplay; fullscreen"></iframe> */}
+        <div className={classes.root}>
+          <div id={oIframe.iframeId} className={classes.player} />
+        </div>
       </React.Fragment>
     )
   }

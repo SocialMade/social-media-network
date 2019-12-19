@@ -5,7 +5,7 @@ export class About extends Component {
   render() {
     return (
       <div>
-        This is About Page
+        <Typography align="center" variant="h3">We're coming soon!</Typography>
       </div>
     );
   }

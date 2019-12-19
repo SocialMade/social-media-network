@@ -5,7 +5,7 @@ export class Subscribe extends Component {
   render() {
     return (
       <div>
-        This is Subscribe Page
+        <Typography align="center" variant="h3">We're coming soon!</Typography>
       </div>
     );
   }
