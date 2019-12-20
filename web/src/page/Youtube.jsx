@@ -44,6 +44,7 @@ class Youtube extends React.Component {
 
   _onReady(event) {
     // access to player in all event handlers via event.target
+    event.target.mute();
     event.target.playVideo();
   }
 
@@ -54,9 +55,9 @@ class Youtube extends React.Component {
       height: 216,
       width: 384,
       playerVars: {
+        m: 1,
         autoplay: 1,
-        playsinline: 1,
-        m: 1
+        playsinline: 1
       }
     };
 
