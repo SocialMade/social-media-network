@@ -112,7 +112,7 @@ const DrawerMenu = () => {
                     >
                         <MenuOutlinedIcon className={classes.settingButton} />
                     </IconButton>
-                    <Typography variant="h6">Social Media Network</Typography>
+                    <Typography className={classes.title} variant="h6">Social Media Network</Typography>
                     <div style={{ flexGrow: 1 }} />
                     <IconButton
                         edge="end"

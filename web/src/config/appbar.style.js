@@ -33,6 +33,12 @@ export const cssStyled = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen
     })
   },
+  title: {
+    flex: 1,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
   settingButton: {
     marginRight: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
