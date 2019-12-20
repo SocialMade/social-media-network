@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography } from '@material-ui/core';
 
-export class Subscribe extends Component {
+class Subscribe extends Component {
   render() {
     return (
       <div>

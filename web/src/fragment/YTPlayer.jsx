@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
+import {loadDynamicScript} from "../util/funcUtil";
 //import * as SomeLibrary from "some-library";
 
 const styles = theme => ({
@@ -30,22 +31,17 @@ class YTPlayer extends Component {
     }
   }
 
-  static propTypes = {
-    prop: PropTypes
-  }
-
   componentDidMount = () => {
     // On mount, check to see if the API script is already loaded
     if (!window.YT) { // If not, load the script asynchronously
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
-
+      
       // onYouTubeIframeAPIReady will load the video after the script is loaded
-      window.onYouTubeIframeAPIReady = this.loadVideo;
+      window.onYouTubeIframeAPIReady = this.initYoutubePlayer;
 
       const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);      
     } else {
       // If script is already there, load the video directly
       this.initYoutubePlayer();
@@ -57,6 +53,11 @@ class YTPlayer extends Component {
       height: this.props.classes.iframe.height,
       width: this.props.classes.iframe.width,
       videoId: this.props.oIframe.videoId,
+      playerVars: { 
+        'autoplay': 1, 
+        'playsinline': 1,
+        'm': 1
+      },
       events: {
         'onReady': this.onPlayerReady,
         'onStateChange': this.onPlayerStateChange
@@ -80,6 +81,8 @@ class YTPlayer extends Component {
 
   onPlayerReady = () => {
     console.log("onPlayerReady");
+    this.player.mute();
+    this.player.playVideo();
   }
 
   render() {
@@ -94,9 +97,7 @@ class YTPlayer extends Component {
         src={`https://www.youtube.com/embed/${oIframe.videoId}?enablejsapi=1&origin=${window.origin}`}
         frameBorder={classes.iframe.border}
         allow="autoplay; fullscreen"></iframe> */}
-        <div className={classes.root}>
-          <div id={oIframe.iframeId} className={classes.player} />
-        </div>
+        <div id={oIframe.iframeId} className={classes.player}></div>
       </React.Fragment>
     )
   }

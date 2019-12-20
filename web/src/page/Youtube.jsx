@@ -7,6 +7,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import { getUrlParamValue } from "../util/stringUtil";
 import axios from "axios";
 import YouTube from 'react-youtube';
+import YTPlayer from '../fragment/YTPlayer';
 
 const useStyles = () => ({
   card: {
@@ -34,7 +35,7 @@ class Youtube extends React.Component {
       )
       .then(({ data }) => {
         this.setState({ videos: data.rows });
-      });
+      });      
   }
 
   componentDidMount() {
@@ -43,7 +44,7 @@ class Youtube extends React.Component {
 
   _onReady(event) {
     // access to player in all event handlers via event.target
-    //event.target.pauseVideo();
+    event.target.playVideo();
   }
 
   render() {
@@ -54,6 +55,7 @@ class Youtube extends React.Component {
       width: 384,
       playerVars: {
         autoplay: 1,
+        playsinline: 1,
         m: 1
       }
     };
@@ -68,9 +70,8 @@ class Youtube extends React.Component {
             <Box m={1}>
               <Card className={classes.card}>
                 <CardActionArea>
-                  <CardMedia className={classes.media} component="div"
-                  /* src={`http://www.youtube.com/embed/${getUrlParamValue(video.url,"v")}`} */>
-                    {/* <YoutubePlayer oIframe={{ iframeId: video.id, videoId: "9SZA5yVJbhI" }} /> */}
+                  <CardMedia className={classes.media} component="div">
+                    {/* <YTPlayer oIframe={{ iframeId: video.id, videoId: `${getUrlParamValue(video.url,"v")}` }} /> */}
                     <YouTube
                       videoId={getUrlParamValue(video.url,"v")}
                       opts={opts}

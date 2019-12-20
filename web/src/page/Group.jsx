@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography } from '@material-ui/core';
 
-export class Group extends Component {
+class Group extends Component {
   render() {
     return (
       <div>

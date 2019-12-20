@@ -5,9 +5,9 @@
   "scripts": {
     "start": "nodemon server.js --exec babel-node --presets env",
     "release": "npm run clean && npm run build && npm run serve",
-    "clean": "rm -rf backend && mkdir backend",
-    "build": "babel . -s -D -d backend --presets env --ignore node_modules",
-    "serve": "nodemon core/server.js"
+    "clean": "rm -rf server && mkdir server",
+    "build": "babel . -s -D -d server --presets env --ignore node_modules",
+    "serve": "nodemon server/server.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.4",

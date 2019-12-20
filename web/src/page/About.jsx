@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography } from '@material-ui/core';
 
-export class About extends Component {
+class About extends Component {
   render() {
     return (
       <div>
