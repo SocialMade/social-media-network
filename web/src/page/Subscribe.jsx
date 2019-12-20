@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Paper, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 export class Subscribe extends Component {
   render() {

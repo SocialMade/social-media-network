@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-  BrowserRouter as Router, Route, Switch,
-  useParams,
-  useRouteMatch
-} from 'react-router-dom';
-import { Paper, Typography } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Route, Switch} from 'react-router-dom';
+import { Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { uiSetting } from '../config/theme.config';
 import Home from '../page/Home';
 import Youtube from '../page/Youtube';
@@ -37,9 +33,6 @@ const useStyles = makeStyles(theme => ({
 
 function Content() {
   const classes = useStyles();
-  const theme = useTheme();
-  let { url } = useRouteMatch();
-  let { id } = useParams();
 
   return (
     <div className={classes.root}>

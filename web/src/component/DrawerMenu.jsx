@@ -1,6 +1,5 @@
 import React from 'react';
-import { withRouter, Link } from "react-router-dom";
-import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -19,7 +18,6 @@ import clsx from 'clsx';
 import Collapse from '@material-ui/core/Collapse';
 import Badge from '@material-ui/core/Badge';
 import MenuOutlinedIcon from '@material-ui/icons/MenuOutlined';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import MonetizationOn from '@material-ui/icons/MonetizationOn';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -27,7 +25,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { uiSetting } from '../config/theme.config';
 import { MenuConfigs } from '../config/menu.config';
 import { cssStyled } from "../config/appbar.style";
-import ProfileMenu from "../fragment/ProfileMenu"
+import ProfileMenu from "../fragment/ProfileMenu";
 
 const keySrollToTop = String(uiSetting.keyScrollToTop);
 
@@ -41,9 +39,6 @@ const DrawerMenu = () => {
         setMobileOpen(!mobileOpen);
     }
 
-    const handleProfile = event => {
-        alert('open Profile');
-    };
 
     const handleCollapse = item => {
         setState(prevState => ({ [item]: !prevState[item] }));
@@ -51,7 +46,7 @@ const DrawerMenu = () => {
 
     const drawer = (
         <List>
-            {MenuConfigs.map(({ key, label, icon, to, items: subItems, index }) => (
+            {MenuConfigs.map(({ key, label, icon, to, items: subItems }) => (
                 <>
                     <ListItem
                         key={key}
@@ -100,6 +95,7 @@ const DrawerMenu = () => {
 
     return (
         <div className={classes.root}>
+
             <CssBaseline />
             <AppBar
                 position="fixed"
@@ -129,7 +125,7 @@ const DrawerMenu = () => {
                         </Badge>
                     </IconButton>
                     <div style={{ width: 20 }} />
-                    <ProfileMenu isAuthen={false} />
+                    <ProfileMenu />
                 </Toolbar>
             </AppBar>
             <Toolbar display="none" id={keySrollToTop} />

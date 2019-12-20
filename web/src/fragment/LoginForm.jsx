@@ -13,6 +13,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 function Copyright() {
   return (
@@ -45,7 +47,23 @@ const styles = theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  facebook: {
+    fontFamily: "Robot, sans-serif",
+    fontWeight: 600,
+    color: "#fff",
+    display: "inline-block",
+    fontSize: `calc(.27548vw + 12.71074px)`,
+    textDecoration: 'none',
+    transition: `background-color.3s`,
+    backgroundColor:  "#4c69ba",
+    border: `calc(.06887vw + .67769px) solid #4c69ba`,
+  }
 });
+
+const AppId = {
+  google: "1044036390602-kaphlee0d5a759ana5e22rntn4kuh4pu.apps.googleusercontent.com",
+  facebook: "826100854489381"
+}
 
 class LoginForm extends Component {
   constructor(props, context) {
@@ -65,6 +83,18 @@ class LoginForm extends Component {
 
   handleClose() {
     this.setState({ open: false });
+  }
+
+  handleGoogleSuccess = () => {
+
+  }
+
+  handleGoogleFailure = () => {
+
+  }
+
+  handleFacebook = () => {
+
   }
 
   render() {
@@ -116,14 +146,23 @@ class LoginForm extends Component {
                     Sign In
                   </Button>
                   <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <Button
-                        type="button"
-                        fullWidth
-                        variant="contained"
-                        color="red">Sign Up Google Account</Button>
-                    </Grid>
                     <Grid item xs={6}>
+                      <FacebookLogin
+                        appId={AppId.facebook}
+                        fields="name,email,picture"
+                        buttonText="Login with Facebook"
+                        cssClass={classes.facebook}
+                        callback={this.handleFacebook}
+                      />
+                      </Grid>
+                    <Grid item xs={6}>
+                      <GoogleLogin
+                        clientId={AppId.google}
+                        onSuccess={this.handleGoogleSuccess}
+                        onFailure={this.handleGoogleFailure}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
                       <Link href="#" variant="body2">
                         Forgot password?
                       </Link>
