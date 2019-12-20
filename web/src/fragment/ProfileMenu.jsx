@@ -94,8 +94,7 @@ class ProfileMenu extends Component {
                       {this.state.isAuthen ?
                         (<><MenuItem onClick={this.handleOpenSettings}>User Settings</MenuItem>
                           <MenuItem onClick={this.handleLogout}>Sign Out</MenuItem></>)
-                        : (<><MenuItem onClick={this.handleLogin}>Sign In</MenuItem>
-                          <MenuItem onClick={this.handleRegister}>Register</MenuItem></>)}
+                        : (<><MenuItem onClick={this.handleLogin}>Sign In Or Sign Up</MenuItem></>)}
                     </MenuList>
                   </ClickAwayListener>
                 </Paper>

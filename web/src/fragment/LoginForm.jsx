@@ -112,19 +112,20 @@ class LoginForm extends Component {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    className={classes.submit}
-                  >
+                    className={classes.submit}>
                     Sign In
                   </Button>
-                  <Grid container>
-                    <Grid item xs>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <Button
+                        type="button"
+                        fullWidth
+                        variant="contained"
+                        color="red">Sign Up Google Account</Button>
+                    </Grid>
+                    <Grid item xs={6}>
                       <Link href="#" variant="body2">
                         Forgot password?
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                      <Link href="#" variant="body2">
-                        {"Don't have an account? Sign Up"}
                       </Link>
                     </Grid>
                   </Grid>
