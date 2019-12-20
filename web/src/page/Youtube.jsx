@@ -54,9 +54,9 @@ class Youtube extends React.Component {
       height: 216,
       width: 384,
       playerVars: {
+        m: 1,
         autoplay: 1,
-        playsinline: 1,
-        m: 1
+        playsinline: 1
       }
     };
 
