@@ -35,10 +35,12 @@ const DrawerMenu = () => {
     const [state, setState] = React.useState({});
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
-    function handleDrawerToggle() {
-        setMobileOpen(!mobileOpen);
-    }
-
+    const toggleDrawer = (isOpen) => event => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setMobileOpen(isOpen);
+    };
 
     const handleCollapse = item => {
         setState(prevState => ({ [item]: !prevState[item] }));
@@ -107,7 +109,7 @@ const DrawerMenu = () => {
                         edge="start"
                         color="inherit"
                         aria-label="Open drawer"
-                        onClick={handleDrawerToggle}
+                        onClick={toggleDrawer(!mobileOpen)}
                         className={classes.settingButton}
                     >
                         <MenuOutlinedIcon className={classes.settingButton} />
@@ -136,20 +138,23 @@ const DrawerMenu = () => {
                         variant="temporary"
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                         open={mobileOpen}
-                        onClose={handleDrawerToggle}
+                        onClose={toggleDrawer(false)}
                         classes={{
                             paper: classes.drawerPaper
                         }}
                         ModalProps={{
                             keepMounted: true // Better open performance on mobile.
                         }}>
-                        <IconButton onClick={handleDrawerToggle} className={classes.closeSettingButton}>
+                        <IconButton onClick={toggleDrawer(!mobileOpen)} className={classes.closeSettingButton}>
                             <CloseIcon />
                         </IconButton>
-                        {drawer}
+                        <div onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
+                            {drawer}
+                        </div>
                     </Drawer>
                 </Hidden>
                 <Hidden xsDown implementation="css">
+                    {/* Menu always display on desktop */}
                     <Drawer
                         className={classes.drawer}
                         variant="permanent"
