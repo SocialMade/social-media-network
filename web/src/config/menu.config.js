@@ -21,7 +21,7 @@ const JsonMenuConfigs = () => {
       icon: <YouTubeIcon style={{ fontSize: '2rem', color: '#F44336' }} />,
       to: '/youtube',
       items: [
-        {
+        /* {
           key: 'subscribed',
           label: 'Subscribed',
           icon: (
@@ -29,7 +29,7 @@ const JsonMenuConfigs = () => {
           ),
           to: '/subscribe',
           items: []
-        }
+        } */
       ]
     },
     {
@@ -38,13 +38,13 @@ const JsonMenuConfigs = () => {
       icon: <FacebookIcon style={{ fontSize: '2rem', color: '#01579B' }} />,
       to: '/facebook',
       items: [
-        {
+       /*  {
           key: 'group',
           label: 'Fanpage',
           icon: <GroupIcon style={{ fontSize: '2rem', color: '#0288d1' }} />,
           to: '/group',
           items: []
-        }
+        } */
       ]
     },
     {
