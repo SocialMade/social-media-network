@@ -4,6 +4,12 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Box from '@material-ui/core/Box';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import Switch from '@material-ui/core/Switch';
+import { blue } from '@material-ui/core/colors';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { getUrlParamValue } from "../util/stringUtil";
 import axios from "axios";
 import YouTube from 'react-youtube';
@@ -21,10 +27,25 @@ const useStyles = () => ({
   },
 });
 
+const BlueSwitch = withStyles({
+  switchBase: {
+    color: blue[300],
+    '&$checked': {
+      color: blue[500],
+    },
+    '&$checked + $track': {
+      backgroundColor: blue[500],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
+
 class Youtube extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { videos: null };
+    this.players = [];
+    this.state = { videos: null, autoPlay: true};
   }
 
   async getVideos() {
@@ -35,7 +56,7 @@ class Youtube extends React.Component {
       )
       .then(({ data }) => {
         this.setState({ videos: data.rows });
-      });      
+      });
   }
 
   componentDidMount() {
@@ -45,24 +66,64 @@ class Youtube extends React.Component {
   _onReady(event) {
     // access to player in all event handlers via event.target
     event.target.mute();
-    event.target.playVideo();
+    if(this.state && this.state.autoPlay === true) {
+      event.target.playVideo();
+    }
   }
+
+  _onPlayerStateChange(event) {
+    /* if (event.data == window.YT.PlayerState.PLAYING) {
+    } */
+  }
+
+  handleChange = name => event => {
+    const isChecked = event.target.checked
+    this.setState({ [name]: isChecked });
+    if(!this.players || this.players.length === 0) return;
+    if(isChecked === false) {
+      this.players.map((frameId) =>{
+        const player = new window.YT.Player(frameId);
+        player.getIframe().contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+      });
+    } else {
+      this.players.map((frameId) =>{
+        const player = new window.YT.Player(frameId);
+        player.getIframe().contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+      });
+    }
+  };
 
   render() {
     const { classes } = this.props;
-    // https://developers.google.com/youtube/player_parameters
+    //https://developers.google.com/youtube/player_parameters
     const opts = {
       height: 216,
       width: 384,
       playerVars: {
         m: 1,
-        autoplay: 1,
+        autoplay: this.state.autoPlay,
         playsinline: 1
       }
     };
 
     return (
       <div className={classes.root}>
+        <CssBaseline />
+        <BottomNavigation showLabels  style={{display:"flex", justifyContent: "left", alignItems:'flex-start'}}>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <BlueSwitch
+                  checked={this.state.autoPlay}
+                  onChange={this.handleChange('autoPlay')}
+                  value="autoPlay"
+                />
+              }
+              labelPlacement="start"
+              label="Auto Play"
+            />
+          </FormGroup>
+        </BottomNavigation>
         <Box
           display="flex"
           flexWrap="wrap"
@@ -72,12 +133,15 @@ class Youtube extends React.Component {
               <Card className={classes.card}>
                 <CardActionArea>
                   <CardMedia className={classes.media} component="div">
-                    {/* <YTPlayer oIframe={{ iframeId: video.id, videoId: `${getUrlParamValue(video.url,"v")}` }} /> */}
+                    {/* <YTPlayer oIframe={{ iframeId: video.id, videoId: getUrlParamValue(video.url,"v") }} /> */}
                     <YouTube
-                      videoId={getUrlParamValue(video.url,"v")}
+                      id={video.id}
+                      videoId={getUrlParamValue(video.url, "v")}
                       opts={opts}
                       onReady={this._onReady}
-                    />
+                      onStateChange={this._onPlayerStateChange}
+                    />)
+                    {this.players.push(video.id)}
                   </CardMedia>
                 </CardActionArea>
               </Card>
