@@ -101,7 +101,7 @@ class Youtube extends React.Component {
       width: 384,
       playerVars: {
         m: 1,
-        autoplay: this.state.autoPlay,
+        autoplay: Number(this.state.autoPlay),
         playsinline: 1
       }
     };
