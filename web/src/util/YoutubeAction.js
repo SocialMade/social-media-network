@@ -75,3 +75,30 @@ export const YTAction = (iframeId) => {
     }
   });
 }
+
+export const YoutubePlayerState = (istate) => {
+  let ytState = "";
+  switch (istate) {
+    case -1:
+      ytState = "UNSTARTED";
+      break;
+    case 0:
+      ytState = "ENDED";
+      break;
+    case 1:
+      ytState = "PLAYING";
+      break;
+    case 2:
+      ytState = "PAUSED";
+      break;
+    case 3:
+      ytState = "BUFFERING";
+      break;
+    case 5:
+      ytState = "VIDEO_CUED";
+      break;
+    default:
+      ytState = "BUFFERING";
+  }
+  return ytState;
+}
