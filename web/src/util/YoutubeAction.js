@@ -3,7 +3,8 @@ export const acquireYouTubeAction = (command, iframeId, args) => {
   const objmess = {
     "event": "command",
     "func": command,
-    "args": args || {}
+    "args": args || [],
+    "id": iframeId || ""
   };
 
   const message = JSON.stringify(objmess);
@@ -26,7 +27,8 @@ export const YTAction = (iframeId) => {
     const objmess = {
       "event": "command",
       "func": command,
-      "args": args || {}
+      "args": args || [],
+      "id": iframeId || ""
     };
     return JSON.stringify(objmess);
   };
