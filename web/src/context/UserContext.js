@@ -19,22 +19,34 @@ class UserProvider extends Component {
       onUpdateUser: (user) => {
         console.log(user);
         this.setState(state => ({ user: user }));
-        sessionStorage.setItem('userlocal', JSON.stringify(this.state));
+        localStorage.setItem('localuser', JSON.stringify(this.state));
       },
       onUpdateSettings: (settings) => {
         console.log(settings);
         this.setState(state => ({ settings: settings }));
-        sessionStorage.setItem('userlocal', JSON.stringify(this.state));
+        localStorage.setItem('localuser', JSON.stringify(this.state));
       },
       onUserLogoff: () => {
         //clear the user settings
-        sessionStorage.removeItem("userlocal");
+        localStorage.removeItem("localuser");
         this.setState(state => ({
           user: {},
           settings: {}
         }));
       }
     };
+  }
+
+  onPageRefresh = () => {
+    const localuser = JSON.parse(localStorage.getItem("localuser") || '{"user":{},"settings":{}}');
+    this.setState(state => ({
+      user: localuser["user"],
+      settings: localuser["settings"]
+    }));
+  }
+
+  componentWillMount() {
+    this.onPageRefresh();
   }
 
   static propTypes = {
