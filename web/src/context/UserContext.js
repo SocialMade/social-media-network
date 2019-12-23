@@ -17,12 +17,10 @@ class UserProvider extends Component {
       user: {},
       settings: {},
       onUpdateUser: (user) => {
-        console.log(user);
         this.setState(state => ({ user: user }));
         localStorage.setItem('localuser', JSON.stringify(this.state));
       },
       onUpdateSettings: (settings) => {
-        console.log(settings);
         this.setState(state => ({ settings: settings }));
         localStorage.setItem('localuser', JSON.stringify(this.state));
       },
