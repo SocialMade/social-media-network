@@ -10,7 +10,8 @@ import { blue } from '@material-ui/core/colors';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { getUrlParamValue } from "../util/stringUtil";
+import { getUrlParamValue } from "../util/common";
+import { YTAction } from "../util/YoutubeAction";
 import axios from "axios";
 import YouTube from 'react-youtube';
 import YTPlayer from '../fragment/YTPlayer';
@@ -82,13 +83,13 @@ class Youtube extends React.Component {
     if (!this.players || this.players.length === 0) return;
     if (isChecked === false) {
       this.players.map((frameId) => {
-        const player = new window.YT.Player(frameId);
-        player.getIframe().contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+        YTAction(frameId).Pause();
+        //player.getIframe().contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
       });
     } else {
       this.players.map((frameId) => {
-        const player = new window.YT.Player(frameId);
-        player.getIframe().contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+        YTAction(frameId).Play();
+        //player.getIframe().contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
       });
     }
   };
