@@ -45,7 +45,7 @@ class Youtube extends React.Component {
   constructor(props) {
     super(props);
     this.players = [];
-    this.state = { videos: null, autoPlay: true};
+    this.state = { videos: null, autoPlay: true };
   }
 
   async getVideos() {
@@ -66,7 +66,7 @@ class Youtube extends React.Component {
   _onReady(event) {
     // access to player in all event handlers via event.target
     event.target.mute();
-    if(this.state && this.state.autoPlay === true) {
+    if (this.state && this.state.autoPlay === true) {
       event.target.playVideo();
     }
   }
@@ -79,14 +79,14 @@ class Youtube extends React.Component {
   handleChange = name => event => {
     const isChecked = event.target.checked
     this.setState({ [name]: isChecked });
-    if(!this.players || this.players.length === 0) return;
-    if(isChecked === false) {
-      this.players.map((frameId) =>{
+    if (!this.players || this.players.length === 0) return;
+    if (isChecked === false) {
+      this.players.map((frameId) => {
         const player = new window.YT.Player(frameId);
         player.getIframe().contentWindow.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
       });
     } else {
-      this.players.map((frameId) =>{
+      this.players.map((frameId) => {
         const player = new window.YT.Player(frameId);
         player.getIframe().contentWindow.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
       });
@@ -109,7 +109,7 @@ class Youtube extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <BottomNavigation showLabels  style={{display:"flex", justifyContent: "left", alignItems:'flex-start'}}>
+        <BottomNavigation showLabels style={{ display: "flex", justifyContent: "left", alignItems: 'flex-start' }}>
           <FormGroup>
             <FormControlLabel
               control={

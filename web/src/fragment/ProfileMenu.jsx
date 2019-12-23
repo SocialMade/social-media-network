@@ -6,10 +6,14 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import IconButton from '@material-ui/core/IconButton';
 import LoginForm from './LoginForm';
+import UserSetting from './UserSetting';
+import { UserConsumer } from '../context/UserContext';
 
 const styles = theme => ({
   root: {
@@ -23,11 +27,11 @@ const styles = theme => ({
 class ProfileMenu extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: false, isAuthen: false, openLogin: false };
-
+    this.state = { open: false };
     // This binding is necessary to make `this` work in the callback
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+
   }
 
   static propTypes = {
@@ -45,8 +49,8 @@ class ProfileMenu extends Component {
     this.setState({ open: false });
   };
 
-  handleLogin = () => {
-    this.refs.loginRef.handleOpen();
+  handleLogin = (callback) => {
+    this.refs.loginRef.handleOpen(callback);
   }
 
   handleLogout = () => {
@@ -60,43 +64,56 @@ class ProfileMenu extends Component {
   render() {
     const { classes } = this.props;
     const { open } = this.state;
+    const loginRef = React.createRef(null);
+    const userSettingRef = React.createRef(null);
+
     return (
-      <React.Fragment>
-        <IconButton
-          edge="end"
-          aria-label="account of current user"
-          aria-controls="primary-account-menu"
-          buttonRef={node => {
-            this.anchorEl = node;
-          }}
-          aria-owns={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleToggle}>
-          <AccountBoxIcon style={{ color: "#fff", fontSize: '2rem' }} />
-        </IconButton>
-        <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              id="menu-list-grow"
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>
-                    {this.state.isAuthen ?
-                      (<><MenuItem onClick={this.handleOpenSettings}>User Settings</MenuItem>
-                        <MenuItem onClick={this.handleLogout}>Sign Out</MenuItem></>)
-                      : (<><MenuItem onClick={this.handleLogin}>Register/Sign In</MenuItem></>)}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-        <LoginForm ref="loginRef" />
-      </React.Fragment>
-    )
+      <UserConsumer>
+        {({ user, settings, ...context }) => (
+          <React.Fragment>
+            <LoginForm ref={loginRef} {...context} />
+            <UserSetting ref={userSettingRef} {...context} />
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              aria-controls="primary-account-menu"
+              buttonRef={node => {
+                this.anchorEl = node;
+              }}
+              aria-owns={open ? 'menu-list-grow' : undefined}
+              aria-haspopup="true"
+              onClick={this.handleToggle}>
+              {(!user || !user.email) ?
+                (<AccountBoxIcon style={{ color: "#fff", fontSize: '2rem' }} />) :
+                (<Chip clickable 
+                  style={{ borderStyle: "none", backgroundColor: "#0091ea", color: "#fff", fontSize: '1rem' }} 
+                  label={user.name} 
+                  avatar={<Avatar alt={user.name} src={user.imageUrl} />} />)}
+            </IconButton>
+            <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  id="menu-list-grow"
+                  style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={this.handleClose}>
+                      <MenuList>
+                        {(!user || !user.email) ?
+                          (<><MenuItem onClick={(e) => { loginRef.current.handleOpen() }}>Register/Sign In</MenuItem></>) :
+                          (<><MenuItem onClick={(e) => { userSettingRef.current.handleOpen() }}>User Settings</MenuItem>
+                            <MenuItem onClick={(e) => { context.onUserLogoff() }}>Sign Out</MenuItem></>)}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </React.Fragment>
+        )}
+      </UserConsumer>
+    );
   }
 }
 

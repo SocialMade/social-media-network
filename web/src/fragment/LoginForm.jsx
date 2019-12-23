@@ -15,19 +15,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="http://social.netlify.com/">
-        social.netlify.com
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from './Copyright';
 
 const styles = theme => ({
   paper: {
@@ -55,7 +43,7 @@ const styles = theme => ({
     fontSize: `calc(.27548vw + 12.71074px)`,
     textDecoration: 'none',
     transition: `background-color.3s`,
-    backgroundColor:  "#4c69ba",
+    backgroundColor: "#4c69ba",
     border: `calc(.06887vw + .67769px) solid #4c69ba`,
   }
 });
@@ -66,8 +54,8 @@ const AppId = {
 }
 
 class LoginForm extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = { open: false };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -85,16 +73,28 @@ class LoginForm extends Component {
     this.setState({ open: false });
   }
 
-  handleGoogleSuccess = () => {
-
+  handleGoogleSuccess = (data) => {
+    const user = {
+      email: data.profileObj.email,
+      name: data.profileObj.name,
+      imageUrl: data.profileObj.imageUrl,
+    };
+    this.props.onUpdateUser(user);
+    this.handleClose();
   }
 
-  handleGoogleFailure = () => {
-
+  handleGoogleFailure = (error) => {
+    console.error(error);
   }
 
-  handleFacebook = () => {
-
+  handleFacebook = (data) => {
+    const user = {
+      email: data.email,
+      name: data.name,
+      imageUrl: data.picture.data.url,
+    };
+    this.props.onUpdateUser(user);
+    this.handleClose();
   }
 
   render() {
@@ -154,7 +154,7 @@ class LoginForm extends Component {
                         cssClass={classes.facebook}
                         callback={this.handleFacebook}
                       />
-                      </Grid>
+                    </Grid>
                     <Grid item xs={6}>
                       <GoogleLogin
                         clientId={AppId.google}
