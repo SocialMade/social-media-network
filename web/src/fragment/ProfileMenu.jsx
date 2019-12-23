@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import Chip from '@material-ui/core/Chip';
+import Tooltip from '@material-ui/core/Tooltip';
 import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
@@ -85,10 +85,9 @@ class ProfileMenu extends Component {
               onClick={this.handleToggle}>
               {(!user || !user.email) ?
                 (<AccountBoxIcon style={{ color: "#fff", fontSize: '2rem' }} />) :
-                (<Chip clickable 
-                  style={{ borderStyle: "none", backgroundColor: "#0091ea", color: "#fff", fontSize: '1rem' }} 
-                  label={user.name} 
-                  avatar={<Avatar alt={user.name} src={user.imageUrl} />} />)}
+                (<Tooltip title={user.name}>
+                  <Avatar alt={user.name} src={user.imageUrl} />
+                </Tooltip>)}
             </IconButton>
             <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
               {({ TransitionProps, placement }) => (
