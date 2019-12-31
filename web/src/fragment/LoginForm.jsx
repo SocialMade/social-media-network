@@ -49,8 +49,8 @@ const styles = theme => ({
 });
 
 const AppId = {
-  google: "1044036390602-kaphlee0d5a759ana5e22rntn4kuh4pu.apps.googleusercontent.com",
-  facebook: "826100854489381"
+  google: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+  facebook: process.env.REACT_APP_FACEBOOK_CLIENT_ID,
 }
 
 class LoginForm extends Component {
