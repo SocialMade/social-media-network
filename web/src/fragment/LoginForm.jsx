@@ -57,20 +57,16 @@ class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = { open: false };
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
   }
 
   static propTypes = {
     prop: PropTypes
   };
-
-  handleOpen() {
-    this.setState({ open: true });
-  }
-
-  handleClose() {
-    this.setState({ open: false });
+  
+  handleDialog = () => {
+    this.setState(prevState =>({
+      "open": !prevState.open
+    }));
   }
 
   handleGoogleSuccess = (data) => {
@@ -80,7 +76,7 @@ class LoginForm extends Component {
       imageUrl: data.profileObj.imageUrl,
     };
     this.props.onUpdateUser(user);
-    this.handleClose();
+    this.handleDialog();
   }
 
   handleGoogleFailure = (error) => {
@@ -94,7 +90,7 @@ class LoginForm extends Component {
       imageUrl: data.picture.data.url,
     };
     this.props.onUpdateUser(user);
-    this.handleClose();
+    this.handleDialog();
   }
 
   render() {
@@ -103,7 +99,7 @@ class LoginForm extends Component {
 
     return (
       <React.Fragment>
-        <Dialog open={open} scroll="body" onClose={this.handleClose} aria-labelledby="form-dialog-title">
+        <Dialog open={open} scroll="body" onClose={this.handleDialog} aria-labelledby="form-dialog-title">
           <DialogContent>
             <Container component="main" maxWidth="xs">
               <CssBaseline />

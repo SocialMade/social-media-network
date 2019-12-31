@@ -49,14 +49,6 @@ class ProfileMenu extends Component {
     this.setState({ open: false });
   };
 
-  handleLogin = (callback) => {
-    this.refs.loginRef.handleOpen(callback);
-  }
-
-  handleLogout = () => {
-    this.setState(state => ({ isAuthen: false }));
-  };
-
   handleOpenSettings = () => {
     return;
   };
@@ -100,8 +92,8 @@ class ProfileMenu extends Component {
                     <ClickAwayListener onClickAway={this.handleClose}>
                       <MenuList>
                         {(!user || !user.email) ?
-                          (<><MenuItem onClick={(e) => { loginRef.current.handleOpen() }}>Register/Sign In</MenuItem></>) :
-                          (<><MenuItem onClick={(e) => { userSettingRef.current.handleOpen() }}>User Settings</MenuItem>
+                          (<><MenuItem onClick={(e) => { loginRef.current.handleDialog() }}>Register/Sign In</MenuItem></>) :
+                          (<><MenuItem onClick={(e) => { userSettingRef.current.handleDialog() }}>User Settings</MenuItem>
                             <MenuItem onClick={(e) => { context.onUserLogoff() }}>Sign Out</MenuItem></>)}
                       </MenuList>
                     </ClickAwayListener>

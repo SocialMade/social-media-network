@@ -53,7 +53,7 @@ class Youtube extends React.Component {
     await axios
       .get(
         /* "http://sharemoney-env.jkkfubp3xq.us-east-2.elasticbeanstalk.com/contents" */
-        "/data.json"
+        "/static/mockdata/data.json"
       )
       .then(({ data }) => {
         this.setState({ videos: data.rows });
